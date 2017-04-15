@@ -26,7 +26,7 @@
     "build:es2015modules": "cross-env NODE_ENV=production BABEL_ENV=modules babel ./src/index.js --out-file ./build/index.es.js",
     "build:copy-files": "babel-node ./scripts/copy-files.js",
     "build:umd:dev": "webpack",
-    "build:umd:min": "cross-env NODE_ENV=production webpack",
+    "build:umd:min": "cross-env NODE_ENV=production webpack -p",
     "build:docs": "babel-node ./scripts/build-api-docs.js",
     "clean": "npm run clean:build",
     "clean:docs": "rimraf docs/api/*",

@@ -124,6 +124,10 @@ export default class Modal extends Component {
      * If `true`, the Modal is visible.
      */
     show: PropTypes.bool,
+    /*
+    * Grab focus of not
+     */
+    grabFocus: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -135,6 +139,7 @@ export default class Modal extends Component {
     ignoreEscapeKeyUp: false,
     modalManager,
     show: false,
+    grabFocus: true,
   };
 
   static contextTypes = {
@@ -229,14 +234,16 @@ export default class Modal extends Component {
     this.props.modalManager.add(this);
     this.onDocumentKeyUpListener = addEventListener(doc, 'keyup', this.handleDocumentKeyUp);
     this.onFocusListener = addEventListener(doc, 'focus', this.handleFocusListener, true);
-    this.focus();
+    if (this.props.grabFocus)
+      this.focus();
   }
 
   handleHide() {
     this.props.modalManager.remove(this);
     this.onDocumentKeyUpListener.remove();
     this.onFocusListener.remove();
-    this.restoreLastFocus();
+    if (this.props.grabFocus)
+      this.restoreLastFocus();
   }
 
   handleFocusListener = () => {
@@ -332,6 +339,7 @@ export default class Modal extends Component {
   render() {
     const {
       disableBackdrop,
+      grabFocus, // eslint-disable-line no-unused-vars
       backdropComponent, // eslint-disable-line no-unused-vars
       backdropClassName, // eslint-disable-line no-unused-vars
       backdropTransitionDuration, // eslint-disable-line no-unused-vars

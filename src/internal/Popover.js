@@ -46,7 +46,7 @@ function getTransformOriginValue(transformOrigin) {
     .join(' ');
 }
 
-export const styleSheet = createStyleSheet('MuiPopover', () => {
+export const styleSheet = createStyleSheet('MuiPopover', (theme) => {
   return {
     popover: {
       position: 'absolute',
@@ -55,6 +55,16 @@ export const styleSheet = createStyleSheet('MuiPopover', () => {
       '&:focus': {
         outline: 'none',
       },
+    },
+
+    modal: {
+      display: 'flex',
+      width: '100%',
+      height: '100%',
+      position: 'fixed',
+      zIndex: theme.zIndex.dialog,
+      top: 0,
+      left: 0,
     },
   };
 });
@@ -389,9 +399,11 @@ export default class Popover extends Component {
 
     const classes = this.context.styleManager.render(styleSheet);
 
+
     return (
       <Modal
         show={open}
+        grabFocus={modal}
         backdropInvisible
         onRequestClose={onRequestClose}
       >
@@ -421,6 +433,6 @@ export default class Popover extends Component {
           </Paper>
         </Transition>
       </Modal>
-    );
+      )
   }
 }

@@ -3,7 +3,9 @@
 import React from 'react';
 import { assert } from 'chai';
 import { createShallow } from 'src/test-utils';
+import forOwn from 'lodash/forOwn';
 import Layout, { styleSheet } from './Layout';
+import Hidden from '../Hidden';
 
 describe('<Layout />', () => {
   let shallow;
@@ -22,7 +24,7 @@ describe('<Layout />', () => {
 
   it('should render', () => {
     const wrapper = shallow(<Layout className="woof" />);
-    assert.strictEqual(wrapper.is('div'), true, 'should be a <div />');
+    assert.strictEqual(wrapper.name(), 'div');
     assert.strictEqual(wrapper.hasClass('woof'), true, 'should have the user class');
   });
 
@@ -43,7 +45,7 @@ describe('<Layout />', () => {
   describe('prop: component', () => {
     it('should change the component', () => {
       const wrapper = shallow(<Layout component="span" />);
-      assert.strictEqual(wrapper.is('span'), true, 'should be a <span>');
+      assert.strictEqual(wrapper.name(), 'span');
     });
   });
 
@@ -71,6 +73,29 @@ describe('<Layout />', () => {
       const handleClick = () => {};
       const wrapper = shallow(<Layout component="span" onClick={handleClick} />);
       assert.strictEqual(wrapper.props().onClick, handleClick);
+    });
+  });
+
+  describe('hidden', () => {
+    const hiddenProps = {
+      onlyHidden: 'xs',
+      xsUpHidden: true,
+      smUpHidden: true,
+      mdUpHidden: true,
+      lgUpHidden: true,
+      xlUpHidden: true,
+      xsDownHidden: true,
+      smDownHidden: true,
+      mdDownHidden: true,
+      lgDownHidden: true,
+      xlDownHidden: true,
+    };
+
+    forOwn(hiddenProps, (value, key) => {
+      it(`should render ${key} with Hidden`, () => {
+        const wrapper = shallow(<Layout hidden={{ [key]: value }} />);
+        assert.strictEqual(wrapper.type(), Hidden);
+      });
     });
   });
 });

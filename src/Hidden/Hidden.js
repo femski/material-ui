@@ -1,97 +1,15 @@
 // @flow
 import React, { Element } from 'react';
-import HiddenJs from './Hidden';
-import type { Breakpoints } from '../styles/breakpoints';
-
-export type DefaultProps = {
-  component: string | Function,
-}
-
-export type HiddenProps = {
-  /**
-   * The content of the component.
-   */
-  children?: Element<any>,
-  /**
-   * The CSS class name of the root element.
-   */
-  className?: string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a DOM element or a component.
-   */
-  component?: string | Function,
-  /**
-   * Hide the given breakpoint.
-   */
-  only?: Breakpoints,
-  /**
-   * If true, screens this size and up will be hidden.
-   * If false, screens this size and up will not be hidden.
-   */
-  xsUp?: boolean, // eslint-disable-line react/sort-prop-types
-  /**
-   * If true, screens this size and up will be hidden.
-   * If false, screens this size and up will not be hidden.
-   */
-  smUp?: boolean, // eslint-disable-line react/sort-prop-types
-  /**
-   * If true, screens this size and up will be hidden.
-   * If false, screens this size and up will not be hidden.
-   */
-  mdUp?: boolean, // eslint-disable-line react/sort-prop-types
-  /**
-   * If true, screens this size and up will be hidden.
-   * If false, screens this size and up will not be hidden.
-   */
-  lgUp?: boolean, // eslint-disable-line react/sort-prop-types
-  /**
-   * If true, screens this size and up will be hidden.
-   * If false, screens this size and up will not be hidden.
-   */
-  xlUp?: boolean, // eslint-disable-line react/sort-prop-types
-  /**
-   * If true, screens this size and down will be hidden.
-   * If false, screens this size and down will not be hidden.
-   */
-  xsDown?: boolean, // eslint-disable-line react/sort-prop-types
-  /**
-   * If true, screens this size and down will be hidden.
-   * If false, screens this size and down will not be hidden.
-   */
-  smDown?: boolean, // eslint-disable-line react/sort-prop-types
-  /**
-   * If true, screens this size and down will be hidden.
-   * If false, screens this size and down will not be hidden.
-   */
-  mdDown?: boolean, // eslint-disable-line react/sort-prop-types
-  /**
-   * If true, screens this size and down will be hidden.
-   * If false, screens this size and down will not be hidden.
-   */
-  lgDown?: boolean, // eslint-disable-line react/sort-prop-types
-  /**
-   * If true, screens this size and down will be hidden.
-   * If false, screens this size and down will not be hidden.
-   */
-  xlDown?: boolean, // eslint-disable-line react/sort-prop-types
-};
-
-export const defaultProps: DefaultProps = {
-  component: 'div',
-  xsUp: false,
-  smUp: false,
-  mdUp: false,
-  lgUp: false,
-  xlUp: false,
-  xsDown: false,
-  smDown: false,
-  mdDown: false,
-  lgDown: false,
-  xlDown: false,
-};
+import HiddenJs from './HiddenJs';
+import type { HiddenProps } from './types';
 
 type Props = HiddenProps & {
+  /**
+   * If string or Function, component is used as the root node and all other props are passed
+   * including children.
+   * If an Element, it will be rendered as-is and no other props are propagated.
+   */
+  component?: string | Function | Element<*>,
   /**
    * Specify which implementation to use.  'js' is the default, 'css' works better for server
    * side rendering.
@@ -104,19 +22,34 @@ type Props = HiddenProps & {
  */
 function Hidden(props: Props) {
   const {
+    component: componentProp,
     implementation,
     ...other
   } = props;
 
+  // workaround: see https://github.com/facebook/flow/issues/1660#issuecomment-297775427
+  const component = componentProp || Hidden.defaultProps.component;
+
   if (implementation === 'js') {
-    return <HiddenJs {...other} />;
+    return <HiddenJs {...other} component={component} />;
   }
 
   throw new Error('<Hidden implementation="css" /> is not yet implemented');
 }
 
 Hidden.defaultProps = {
+  component: 'div',
   implementation: 'js',
+  xsUp: false,
+  smUp: false,
+  mdUp: false,
+  lgUp: false,
+  xlUp: false,
+  xsDown: false,
+  smDown: false,
+  mdDown: false,
+  lgDown: false,
+  xlDown: false,
 };
 
 export default Hidden;

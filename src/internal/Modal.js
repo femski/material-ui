@@ -204,7 +204,7 @@ export default class Modal extends Component {
   focus() {
     const currentFocus = activeElement(ownerDocument(ReactDOM.findDOMNode(this)));
     const modalContent = this.modal && this.modal.lastChild;
-    const focusInModal = currentFocus && contains(modalContent, currentFocus);
+    const focusInModal = currentFocus && modalContent && contains(modalContent, currentFocus);
 
     if (modalContent && !focusInModal) {
       this.lastFocus = currentFocus;
@@ -212,7 +212,7 @@ export default class Modal extends Component {
       if (!modalContent.hasAttribute('tabIndex')) {
         modalContent.setAttribute('tabIndex', -1);
         warning(false, (
-          'The modal content node does not accept focus. ' +
+          'Material-UI: The modal content node does not accept focus. ' +
           'For the benefit of assistive technologies, ' +
           'the tabIndex of the node is being set to "-1".'
         ));

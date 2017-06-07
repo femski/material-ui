@@ -1,8 +1,8 @@
 // @flow weak
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createStyleSheet } from 'jss-theme-reactor';
-import customPropTypes from 'material-ui/utils/customPropTypes';
+import compose from 'recompose/compose';
+import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Hidden from 'material-ui/Hidden';
 import withWidth from 'material-ui/utils/withWidth';
@@ -34,36 +34,33 @@ const styleSheet = createStyleSheet('BreakpointOnly', (theme) => ({
   },
 }));
 
-function BreakpointOnly(props, context) {
-  const classes = context.styleManager.render(styleSheet);
+function BreakpointOnly(props) {
+  const classes = props.classes;
 
   return (
     <div className={classes.container}>
       <Typography type="subheading" className={classes.typography}>
         Current width: {props.width}
       </Typography>
-      <Hidden
-        only="lg"
-        component={<Paper className={classes.paper}>Hidden on lg</Paper>}
-      />
-      <Hidden
-        only="sm"
-        component={<Paper className={classes.paper}>Hidden on sm</Paper>}
-      />
-      <Hidden
-        only={['sm', 'lg']}
-        component={<Paper className={classes.paper}>Hidden on sm and lg</Paper>}
-      />
+      <Hidden only="lg">
+        <Paper className={classes.paper}>Hidden on lg</Paper>
+      </Hidden>
+      <Hidden only="sm">
+        <Paper className={classes.paper}>Hidden on sm</Paper>
+      </Hidden>
+      <Hidden only={['sm', 'lg']}>
+        <Paper className={classes.paper}>Hidden on sm and lg</Paper>
+      </Hidden>
     </div>
   );
 }
 
 BreakpointOnly.propTypes = {
+  classes: PropTypes.object.isRequired,
   width: PropTypes.string,
 };
 
-BreakpointOnly.contextTypes = {
-  styleManager: customPropTypes.muiRequired,
-};
-
-export default withWidth()(BreakpointOnly);
+export default compose(
+  withStyles(styleSheet),
+  withWidth(),
+)(BreakpointOnly);

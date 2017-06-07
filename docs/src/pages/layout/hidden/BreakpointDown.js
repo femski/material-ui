@@ -1,8 +1,8 @@
 // @flow weak
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createStyleSheet } from 'jss-theme-reactor';
-import customPropTypes from 'material-ui/utils/customPropTypes';
+import compose from 'recompose/compose';
+import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Hidden from 'material-ui/Hidden';
 import withWidth from 'material-ui/utils/withWidth';
@@ -34,44 +34,39 @@ const styleSheet = createStyleSheet('BreakpointDown', (theme) => ({
   },
 }));
 
-function BreakpointDown(props, context) {
-  const classes = context.styleManager.render(styleSheet);
+function BreakpointDown(props) {
+  const classes = props.classes;
 
   return (
     <div className={classes.container}>
       <Typography type="subheading" className={classes.typography}>
         Current width: {props.width}
       </Typography>
-      <Hidden
-        xsDown
-        component={<Paper className={classes.paper}>xsDown</Paper>}
-      />
-      <Hidden
-        smDown
-        component={<Paper className={classes.paper}>smDown</Paper>}
-      />
-      <Hidden
-        mdDown
-        component={<Paper className={classes.paper}>mdDown</Paper>}
-      />
-      <Hidden
-        lgDown
-        component={<Paper className={classes.paper}>lgDown</Paper>}
-      />
-      <Hidden
-        xlDown
-        component={<Paper className={classes.paper}>xlDown</Paper>}
-      />
+      <Hidden xsDown>
+        <Paper className={classes.paper}>xsDown</Paper>
+      </Hidden>
+      <Hidden smDown>
+        <Paper className={classes.paper}>smDown</Paper>
+      </Hidden>
+      <Hidden mdDown>
+        <Paper className={classes.paper}>mdDown</Paper>
+      </Hidden>
+      <Hidden lgDown>
+        <Paper className={classes.paper}>lgDown</Paper>
+      </Hidden>
+      <Hidden xlDown>
+        <Paper className={classes.paper}>xlDown</Paper>
+      </Hidden>
     </div>
   );
 }
 
 BreakpointDown.propTypes = {
+  classes: PropTypes.object.isRequired,
   width: PropTypes.string,
 };
 
-BreakpointDown.contextTypes = {
-  styleManager: customPropTypes.muiRequired,
-};
-
-export default withWidth()(BreakpointDown);
+export default compose(
+  withStyles(styleSheet),
+  withWidth(),
+)(BreakpointDown);

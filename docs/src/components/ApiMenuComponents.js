@@ -14,7 +14,7 @@ class ApiMenuComponents extends Component {
     open: false,
   };
 
-  handleMenuClick = (event) => {
+  handleMenuClick = event => {
     this.setState({
       open: true,
       anchorEl: event.currentTarget,
@@ -44,7 +44,7 @@ class ApiMenuComponents extends Component {
           open={this.state.open}
           onRequestClose={this.handleMenuRequestClose}
         >
-          {this.props.components.map((component) => (
+          {this.props.components.map(component =>
             <MenuItem
               key={component}
               component={Link}
@@ -53,8 +53,8 @@ class ApiMenuComponents extends Component {
               onClick={this.handleMenuRequestClose}
             >
               {component}
-            </MenuItem>
-          ))}
+            </MenuItem>,
+          )}
         </Menu>
       </div>
     );

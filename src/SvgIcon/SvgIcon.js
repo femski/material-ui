@@ -4,54 +4,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createStyleSheet } from 'jss-theme-reactor';
-import customPropTypes from '../utils/customPropTypes';
+import withStyles from '../styles/withStyles';
 
-export const styleSheet = createStyleSheet('MuiSvgIcon', (theme) => {
-  return {
-    svgIcon: {
-      display: 'inline-block',
-      fill: 'currentColor',
-      height: 24,
-      width: 24,
-      userSelect: 'none',
-      transition: theme.transitions.create('fill', {
-        duration: theme.transitions.duration.shorter,
-      }),
-    },
-  };
-});
+export const styleSheet = createStyleSheet('MuiSvgIcon', theme => ({
+  root: {
+    display: 'inline-block',
+    fill: 'currentColor',
+    height: 24,
+    width: 24,
+    userSelect: 'none',
+    transition: theme.transitions.create('fill', {
+      duration: theme.transitions.duration.shorter,
+    }),
+  },
+}));
 
-export default function SvgIcon(props, context) {
-  const {
-    children,
-    className: classNameProp,
-    titleAccess,
-    viewBox,
-    ...other
-  } = props;
-
-  const classes = context.styleManager.render(styleSheet);
-
-  const className = classNames({
-    [classes.svgIcon]: true,
-  }, classNameProp);
+function SvgIcon(props) {
+  const { children, classes, className, titleAccess, viewBox, ...other } = props;
 
   return (
     <svg
-      className={className}
+      className={classNames(classes.root, className)}
       viewBox={viewBox}
       aria-hidden={titleAccess ? 'false' : 'true'}
       {...other}
     >
-      {titleAccess ? (
-        <title>{titleAccess}</title>
-      ) : null}
+      {titleAccess ? <title>{titleAccess}</title> : null}
       {children}
     </svg>
   );
 }
-
-SvgIcon.muiName = 'SvgIcon';
 
 SvgIcon.propTypes = {
   /**
@@ -59,7 +41,11 @@ SvgIcon.propTypes = {
    */
   children: PropTypes.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: PropTypes.object.isRequired,
+  /**
+   * @ignore
    */
   className: PropTypes.string,
   /**
@@ -81,6 +67,6 @@ SvgIcon.defaultProps = {
   viewBox: '0 0 24 24',
 };
 
-SvgIcon.contextTypes = {
-  styleManager: customPropTypes.muiRequired,
-};
+SvgIcon.muiName = 'SvgIcon';
+
+export default withStyles(styleSheet)(SvgIcon);

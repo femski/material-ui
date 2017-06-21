@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { assert } from 'chai';
-import { createShallow } from 'src/test-utils';
+import { createShallow } from '../test-utils';
 import TableSortLabel, { styleSheet } from './TableSortLabel';
 
 describe('<TableSortLabel />', () => {
@@ -10,13 +10,13 @@ describe('<TableSortLabel />', () => {
   let classes;
 
   before(() => {
-    shallow = createShallow();
+    shallow = createShallow({ dive: true });
     classes = shallow.context.styleManager.render(styleSheet);
   });
 
   it('should render TableSortLabel', () => {
     const wrapper = shallow(<TableSortLabel />);
-    assert.strictEqual(wrapper.hasClass(classes.sortLabel), true, 'should have sort label class');
+    assert.strictEqual(wrapper.hasClass(classes.root), true, 'should have root class');
   });
 
   it('should set the active class when active', () => {

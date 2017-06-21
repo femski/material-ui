@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -8,11 +8,11 @@ import RestoreIcon from 'material-ui-icons/Restore';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 import LocationOnIcon from 'material-ui-icons/LocationOn';
 
-const styleSheet = createStyleSheet('SimpleBottomNavigation', () => ({
+const styleSheet = createStyleSheet('SimpleBottomNavigation', {
   root: {
     width: 500,
   },
-}));
+});
 
 class SimpleBottomNavigation extends Component {
   state = {
@@ -29,23 +29,10 @@ class SimpleBottomNavigation extends Component {
 
     return (
       <div className={classes.root}>
-        <BottomNavigation
-          index={index}
-          onChange={this.handleChange}
-          showLabels
-        >
-          <BottomNavigationButton
-            label="Recents"
-            icon={<RestoreIcon />}
-          />
-          <BottomNavigationButton
-            label="Favorites"
-            icon={<FavoriteIcon />}
-          />
-          <BottomNavigationButton
-            label="Nearby"
-            icon={<LocationOnIcon />}
-          />
+        <BottomNavigation index={index} onChange={this.handleChange} showLabels>
+          <BottomNavigationButton label="Recents" icon={<RestoreIcon />} />
+          <BottomNavigationButton label="Favorites" icon={<FavoriteIcon />} />
+          <BottomNavigationButton label="Nearby" icon={<LocationOnIcon />} />
         </BottomNavigation>
       </div>
     );

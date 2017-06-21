@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 /* eslint-disable react/no-multi-comp */
 
 import React, { Component } from 'react';
@@ -7,17 +7,16 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
-const TabContainer = (props) => (
+const TabContainer = props =>
   <div style={{ padding: 20 }}>
     {props.children}
-  </div>
-);
+  </div>;
 
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const styleSheet = createStyleSheet('ScrollableTabsButtonAuto', (theme) => ({
+const styleSheet = createStyleSheet('ScrollableTabsButtonAuto', theme => ({
   root: {
     marginTop: 30,
     width: '100%',
@@ -35,7 +34,7 @@ class ScrollableTabsButtonAuto extends Component {
 
   handleChange = (event, index) => {
     this.setState({ index });
-  }
+  };
 
   render() {
     const classes = this.props.classes;

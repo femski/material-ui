@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -6,10 +6,10 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
-const styleSheet = createStyleSheet('CenteredTabs', () => ({
+const styleSheet = createStyleSheet('CenteredTabs', theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 30,
+    marginTop: theme.spacing.unit * 3,
   },
 }));
 
@@ -27,12 +27,7 @@ class CenteredTabs extends Component {
 
     return (
       <Paper className={classes.root}>
-        <Tabs
-          index={this.state.index}
-          onChange={this.handleChange}
-          textColor="accent"
-          centered
-        >
+        <Tabs index={this.state.index} onChange={this.handleChange} textColor="accent" centered>
           <Tab label="Item One" />
           <Tab label="Item Two" />
           <Tab label="Item Three" />

@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
 import { createStyleSheet } from 'jss-theme-reactor';
-import customPropTypes from '../utils/customPropTypes';
+import withStyles from '../styles/withStyles';
 
-export const styleSheet = createStyleSheet('MuiPaper', (theme) => {
+export const styleSheet = createStyleSheet('MuiPaper', theme => {
   const shadows = {};
 
   theme.shadows.forEach((shadow, index) => {
-    shadows[`dp${index}`] = {
+    shadows[`dp-${index}`] = {
       boxShadow: shadow,
     };
   });
@@ -27,49 +27,47 @@ export const styleSheet = createStyleSheet('MuiPaper', (theme) => {
   };
 });
 
-/**
- * A piece of material paper.
- *
- * ```js
- * import Paper from 'material-ui/Paper';
- *
- * const Component = () => <Paper elevation={8}>Hello World</Paper>;
- * ```
- */
-export default function Paper(props, context) {
+function Paper(props) {
   const {
+    classes,
     className: classNameProp,
     component: ComponentProp,
     square,
     elevation,
     ...other
   } = props;
-  const classes = context.styleManager.render(styleSheet);
 
-  warning(elevation >= 0 && elevation < 25,
-    `Material-UI: this elevation \`${elevation}\` is not implemented.`);
+  warning(
+    elevation >= 0 && elevation < 25,
+    `Material-UI: this elevation \`${elevation}\` is not implemented.`,
+  );
 
-  const classNameElevation = `dp${elevation >= 0 ? elevation : 0}`;
-  const className = classNames(classes.paper, classes[classNameElevation], {
-    [classes.rounded]: !square,
-  }, classNameProp);
+  const className = classNames(
+    classes.paper,
+    classes[`dp-${elevation >= 0 ? elevation : 0}`],
+    {
+      [classes.rounded]: !square,
+    },
+    classNameProp,
+  );
 
   return <ComponentProp className={className} {...other} />;
 }
 
 Paper.propTypes = {
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: PropTypes.object.isRequired,
+  /**
+   * @ignore
    */
   className: PropTypes.string,
   /**
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   /**
    * Shadow depth, corresponds to `dp` in the spec.
    * It's accepting values between 0 and 24 inclusive.
@@ -87,6 +85,4 @@ Paper.defaultProps = {
   square: false,
 };
 
-Paper.contextTypes = {
-  styleManager: customPropTypes.muiRequired,
-};
+export default withStyles(styleSheet)(Paper);

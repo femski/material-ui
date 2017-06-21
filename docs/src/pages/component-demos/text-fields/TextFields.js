@@ -1,17 +1,18 @@
-// @flow weak
+// @flow
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 
-const styleSheet = createStyleSheet('TextFields', () => ({
+const styleSheet = createStyleSheet('TextFields', theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
   },
   input: {
-    margin: 10,
+    margin: theme.spacing.unit,
+    width: 200,
   },
 }));
 
@@ -30,7 +31,7 @@ class TextFields extends Component {
           label="Name"
           className={classes.input}
           value={this.state.name}
-          onChange={(event) => this.setState({ name: event.target.value })}
+          onChange={event => this.setState({ name: event.target.value })}
         />
         <TextField
           id="uncontrolled"
@@ -52,11 +53,45 @@ class TextFields extends Component {
           defaultValue="Hello World"
           className={classes.input}
         />
+        <TextField id="password" label="Password" className={classes.input} type="password" />
         <TextField
-          id="password"
-          label="Password"
+          id="multiline-flexible"
+          label="Multiline"
+          multiline
+          rowsMax="4"
+          defaultValue="Default Value"
           className={classes.input}
-          type="password"
+        />
+        <TextField
+          id="multiline-static"
+          label="Multiline"
+          multiline
+          rows="4"
+          defaultValue="Default Value"
+          className={classes.input}
+        />
+        <TextField
+          id="date"
+          label="From date"
+          type="date"
+          defaultValue="2017-05-24"
+          className={classes.input}
+        />
+        <TextField
+          id="helperText"
+          label="Helper text"
+          type="text"
+          defaultValue="Default Value"
+          className={classes.input}
+          helperText="Some important text"
+        />
+        <TextField
+          id="placeholder"
+          label="Label"
+          className={classes.input}
+          type="text"
+          InputProps={{ placeholder: 'Placeholder' }}
+          helperText="Helper text"
         />
       </div>
     );

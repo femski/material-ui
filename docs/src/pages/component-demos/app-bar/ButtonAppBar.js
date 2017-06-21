@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -10,27 +10,23 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 
-const styleSheet = createStyleSheet('ButtonAppBar', () => ({
+const styleSheet = createStyleSheet('ButtonAppBar', {
   root: {
-    position: 'relative',
     marginTop: 30,
     width: '100%',
-  },
-  appBar: {
-    position: 'relative',
   },
   flex: {
     flex: 1,
   },
-}));
+});
 
 function ButtonAppBar(props) {
   const classes = props.classes;
   return (
     <div className={classes.root}>
-      <AppBar className={classes.appBar}>
+      <AppBar position="static">
         <Toolbar>
-          <IconButton contrast>
+          <IconButton contrast aria-label="Menu">
             <MenuIcon />
           </IconButton>
           <Typography type="title" colorInherit className={classes.flex}>Title</Typography>

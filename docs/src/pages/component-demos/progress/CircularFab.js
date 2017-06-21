@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -9,7 +9,7 @@ import Button from 'material-ui/Button';
 import CheckIcon from 'material-ui-icons/Check';
 import SaveIcon from 'material-ui-icons/Save';
 
-const styleSheet = createStyleSheet('CircularFab', () => ({
+const styleSheet = createStyleSheet('CircularFab', {
   wrapper: {
     position: 'relative',
   },
@@ -25,7 +25,7 @@ const styleSheet = createStyleSheet('CircularFab', () => ({
     top: -2,
     left: -2,
   },
-}));
+});
 
 class CircularFab extends Component {
   state = {
@@ -39,17 +39,20 @@ class CircularFab extends Component {
 
   handleButtonClick = () => {
     if (!this.state.loading) {
-      this.setState({
-        success: false,
-        loading: true,
-      }, () => {
-        this.timer = setTimeout(() => {
-          this.setState({
-            loading: false,
-            success: true,
-          });
-        }, 2e3);
-      });
+      this.setState(
+        {
+          success: false,
+          loading: true,
+        },
+        () => {
+          this.timer = setTimeout(() => {
+            this.setState({
+              loading: false,
+              success: true,
+            });
+          }, 2e3);
+        },
+      );
     }
   };
 
@@ -66,12 +69,7 @@ class CircularFab extends Component {
 
     return (
       <div className={classes.wrapper}>
-        <Button
-          fab
-          primary
-          className={buttonClass}
-          onClick={this.handleButtonClick}
-        >
+        <Button fab primary className={buttonClass} onClick={this.handleButtonClick}>
           {success ? <CheckIcon /> : <SaveIcon />}
         </Button>
         {loading && <CircularProgress size={60} className={classes.progress} />}

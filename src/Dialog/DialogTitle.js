@@ -4,43 +4,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createStyleSheet } from 'jss-theme-reactor';
-import customPropTypes from '../utils/customPropTypes';
+import withStyles from '../styles/withStyles';
 import Typography from '../Typography';
 
-export const styleSheet = createStyleSheet('MuiDialogTitle', () => {
-  const gutter = 24;
-  return {
-    root: {
-      margin: 0,
-      padding: `${gutter}px ${gutter}px 20px ${gutter}px`,
-      flex: '0 0 auto',
-    },
-  };
-});
+export const styleSheet = createStyleSheet('MuiDialogTitle', theme => ({
+  root: {
+    margin: 0,
+    padding: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px \
+      20px ${theme.spacing.unit * 3}px`,
+    flex: '0 0 auto',
+  },
+}));
 
-export default function DialogTitle(props, context) {
-  const {
-    children,
-    className,
-    disableTypography,
-    ...other
-  } = props;
-
-  const classes = context.styleManager.render(styleSheet);
+function DialogTitle(props) {
+  const { children, classes, className, disableTypography, ...other } = props;
 
   return (
-    <div
-      data-mui-test="DialogTitle"
-      className={classNames(classes.root, className)}
-      {...other}
-    >
-      {disableTypography ? (
-        children
-      ) : (
-        <Typography type="title">
-          {children}
-        </Typography>
-      )}
+    <div data-mui-test="DialogTitle" className={classNames(classes.root, className)} {...other}>
+      {disableTypography
+        ? children
+        : <Typography type="title">
+            {children}
+          </Typography>}
     </div>
   );
 }
@@ -51,7 +36,11 @@ DialogTitle.propTypes = {
    */
   children: PropTypes.node,
   /**
-   * The CSS class name of the root element.
+   * Useful to extend the style applied to components.
+   */
+  classes: PropTypes.object.isRequired,
+  /**
+   * @ignore
    */
   className: PropTypes.string,
   /**
@@ -65,6 +54,4 @@ DialogTitle.defaultProps = {
   disableTypography: false,
 };
 
-DialogTitle.contextTypes = {
-  styleManager: customPropTypes.muiRequired,
-};
+export default withStyles(styleSheet)(DialogTitle);

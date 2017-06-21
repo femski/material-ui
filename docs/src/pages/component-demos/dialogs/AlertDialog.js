@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 
 import React, { Component } from 'react';
 import Button from 'material-ui/Button';
@@ -22,11 +22,8 @@ export default class AlertDialog extends Component {
         <Button onClick={() => this.setState({ open: true })}>
           Open alert dialog
         </Button>
-        <Dialog
-          open={this.state.open}
-          onRequestClose={this.handleRequestClose}
-        >
-          <DialogTitle>{'Use Google\'s location service?'}</DialogTitle>
+        <Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
+          <DialogTitle>{"Use Google's location service?"}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Let Google help apps determine location.
@@ -43,4 +40,3 @@ export default class AlertDialog extends Component {
     );
   }
 }
-

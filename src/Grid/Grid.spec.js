@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { assert } from 'chai';
-import { createShallow } from 'src/test-utils';
 import forOwn from 'lodash/forOwn';
+import { createShallow } from '../test-utils';
 import Grid, { styleSheet } from './Grid';
 import Hidden from '../Hidden';
 
@@ -12,9 +12,9 @@ describe('<Grid />', () => {
   let classes;
 
   before(() => {
-    const shallowInner = createShallow();
+    const shallowInner = createShallow({ dive: true });
     // Render deeper to bypass the GridWrapper.
-    shallow = (node) => {
+    shallow = node => {
       return shallowInner(node).find('Grid').shallow({
         context: shallowInner.context,
       });

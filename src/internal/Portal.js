@@ -7,16 +7,7 @@ import {
   unmountComponentAtNode,
 } from 'react-dom';
 
-export default class Portal extends Component {
-  static propTypes = {
-    /**
-     * The content of the component.
-     */
-    children: PropTypes.node,
-    container: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    open: PropTypes.bool,
-  };
-
+class Portal extends Component {
   static defaultProps = {
     open: false,
   };
@@ -81,3 +72,12 @@ export default class Portal extends Component {
   }
 }
 
+Portal.propTypes = {
+  /**
+   * The content of the component.
+   */
+  children: PropTypes.node,
+  open: PropTypes.bool,
+};
+
+export default Portal;

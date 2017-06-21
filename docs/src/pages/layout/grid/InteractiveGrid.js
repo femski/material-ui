@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -8,23 +8,21 @@ import { LabelRadio, RadioGroup } from 'material-ui/Radio';
 import Paper from 'material-ui/Paper';
 import { FormLabel } from 'material-ui/Form';
 
-const styleSheet = createStyleSheet('InteractiveGrid', () => {
-  return {
-    root: {
-      flexGrow: 1,
-    },
-    demo: {
-      height: 240,
-    },
-    paper: {
-      padding: 12,
-      height: '100%',
-    },
-    control: {
-      padding: 12,
-    },
-  };
-});
+const styleSheet = createStyleSheet('InteractiveGrid', theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  demo: {
+    height: 240,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    height: '100%',
+  },
+  control: {
+    padding: theme.spacing.unit * 2,
+  },
+}));
 
 class InteractiveGrid extends Component {
   state = {
@@ -32,21 +30,17 @@ class InteractiveGrid extends Component {
     justify: 'center',
     align: 'center',
     gutter: '16',
-  }
+  };
 
-  handleChange = (key) => (event, value) => {
+  handleChange = key => (event, value) => {
     this.setState({
       [key]: value,
     });
-  }
+  };
 
   render() {
     const classes = this.props.classes;
-    const {
-      align,
-      direction,
-      justify,
-    } = this.state;
+    const { align, direction, justify } = this.state;
 
     return (
       <Grid container className={classes.root}>
@@ -58,13 +52,13 @@ class InteractiveGrid extends Component {
             direction={direction}
             justify={justify}
           >
-            {Array.from({ length: 3 }, (v, k) => k).map((index) => (
+            {Array.from({ length: 3 }, (v, k) => k).map(index =>
               <Grid key={index} item>
                 <Paper className={classes.paper}>
                   {`Cell ${index + 1}`}
                 </Paper>
-              </Grid>
-            ))}
+              </Grid>,
+            )}
           </Grid>
         </Grid>
         <Grid item xs={12}>

@@ -1,14 +1,14 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
+import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
-import AlarmIcon from 'material-ui-icons/Alarm';
 import AddShoppingCartIcon from 'material-ui-icons/AddShoppingCart';
 
-const styleSheet = createStyleSheet('IconButtons', (theme) => ({
+const styleSheet = createStyleSheet('IconButtons', theme => ({
   button: {
     margin: theme.spacing.unit,
   },
@@ -18,16 +18,16 @@ function IconButtons(props) {
   const classes = props.classes;
   return (
     <div>
-      <IconButton className={classes.button}>
+      <IconButton className={classes.button} aria-label="Delete">
         <DeleteIcon />
       </IconButton>
-      <IconButton className={classes.button} disabled>
+      <IconButton className={classes.button} aria-label="Delete" disabled>
         <DeleteIcon />
       </IconButton>
-      <IconButton accent className={classes.button}>
-        <AlarmIcon />
+      <IconButton accent className={classes.button} aria-label="Add an alarm">
+        <Icon>alarm</Icon>
       </IconButton>
-      <IconButton contrast className={classes.button}>
+      <IconButton contrast className={classes.button} aria-label="Add to shopping cart">
         <AddShoppingCartIcon />
       </IconButton>
     </div>

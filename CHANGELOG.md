@@ -24,6 +24,117 @@ Below is a summary of major changes.
 - [Ripple/TouchRipple] Refactored and now works properly inside a button in firefox!
 - [Button] Raised/flat/fab are now combined into a single component.
 
+## 1.0.0-alpha.16
+###### _Jun 1, 2017_
+
+This release is mainly about bug fixes and improving the documentation.
+Shout out to @kybarg for the update of the `TextField` in order to better follow the spec (#6566).
+
+##### Component Fixes / Enhancements
+
+- [TextField] Make it meet guidelines (#6566) @kybarg
+- [TextField] Fix Labels flicker in Chrome (#7010) @kybarg
+- [TextField] Fix broken isDirty logic (#7008) @oliviertassinari
+- [CircularProgress] make it start and finish from top (#6966) @slavab89
+- [Switch] Add inputProps property link in the TextField (#6959) @oliviertassinari
+- [BaseButton] Better handle the disabled property (#6958) @oliviertassinari
+- [FormControl] Fix onFocus and onBlur events override (#6952) @oliviertassinari
+- [Tabs] Add `false` as a valid index value (#6945) @oliviertassinari
+- [Input] Improve support of the date/time fields (#6947) @oliviertassinari
+- [MuiThemeProvider] Add a muiThemeProviderFactory (#7000) @viotti
+
+##### Docs
+
+- [docs] Add a VISION.md file (#6982) @oliviertassinari
+- [docs] Grid docs should refer to Hidden component/demo (#6963) @kgregory
+- [docs] Fix grammar/verbiage on customization/themes page (#6943) @drusepth
+- [docs] Change text for link (#6977) @sghall
+- [docs] Some grammar/text edits (#6976) @sghall
+- [docs] Suggested text changes (#6978) @sghall
+- [docs] Fix MuiThemeProvider documentation (#6989) @viotti
+- [docs] Fix TableRow persistent background when clicked (#7001) @sajal50
+- [docs] Add an example with a decorator (#7011) @uufish
+
+##### Core
+
+- [npm] Fix react-scrollbar-size issue (#7009) @oliviertassinari
+- [transitions] Add test coverage for the transition validation functions (#6936) @Alex4S
+- [eslint] enable flow's built-in types (#6946) @rosskevin
+- [test] Upgrade the docker versions (#6979) @oliviertassinari
+
+## 1.0.0-alpha.15
+###### _May 23, 2017_
+
+This release introduces an important change in the API and the implementation.
+Each exposed component is wrapped with a `withStyles` Higher-order component.
+This HOC has different responsibilities, the one you gonna be interested in is
+regarding the `classes` property. Now, we consider the CSS as a public API.
+You now have two way to customize absolutely all the CSS injected by Material-UI.
+Either the instance level with the `classes` property or the class level with the
+`overrides` theme property.
+
+To [learn more about it](https://material-ui-1dab0.firebaseapp.com/customization/overrides), have a look at the documentation. Also, these options are automatically [documented](http://0.0.0.0:3000/component-api/button#classes).
+
+##### Breaking changes
+
+- [core] Various fixes after using it on a real project (#6882) @oliviertassinari
+Apply the other properties (undocumented) on the root of the Menu.
+- [core] Add a new classes property to all the components #6911 @oliviertassinari
+If you where using the ref to access the internal of the component or native elements,
+you gonna have to change your strategy, either use `innerRef` or `inputRef`.
+
+##### Component Fixes / Enhancements
+
+- [Typography] Add missing style (#6873) @oliviertassinari
+- [Dialog] create responsive HOC `withResponsiveFullScreen` (#6898) @rosskevin
+- [core] Remove usage of 'not-allowed' (#6932) @oliviertassinari
+- [Switch] Remove the blue flash of death (#6933) @oliviertassinari
+- [TextField] Fix the inputClassName property (#6934) @oliviertassinari
+
+##### Docs
+
+- [docs] Enable flow on much more demos (#6881) @oliviertassinari
+- [docs] Better support IE11 (#6880) @oliviertassinari
+- [Tabs] Document that the index is required (#6935) @oliviertassinari
+
+##### Core
+
+- [eslint] enforce import plugin rules (#6923) @rosskevin
+- [core] Change style API (#6892) @oliviertassinari
+- [eslint] Fit closer to airbnb (#6894) @oliviertassinari
+- [core] Upgrade the dependencies (#6872) @oliviertassinari
+- [core] Add prettier (#6931) @oliviertassinari
+
+## 1.0.0-alpha.14
+###### _May 14, 2017_
+
+##### Breaking changes
+
+- [Hidden] Remove one degree of freedom (#6820) @oliviertassnari
+- [Hidden] Logical fixes for up/down (#6839) @rosskevin
+
+##### Component Fixes / Enhancements
+
+- [Icon] Add aria-hidden (#6829) @oliviertassinari
+- [Paper] Add elevation boundaries (#6817) @oliviertassinari
+- [Paper] Add a component property (#6830) @oliviertassinari
+- [Transition] Add flow proptypes (#6846) @rosskevin
+- [npm] Upgrade the recompose dependency (#6855) @oliviertassinari
+- [TextField] Add in support for multiline text fields (#6553) @peteratticusberg
+- [TextField] Second iteration on multilines (#6859) @oliviertassinari
+
+##### Docs
+
+- [docs] Fix link to material-ui-icons (#6825) @NiloCK
+- [docs] Add a direct link to GitHub (#6861) @oliviertassinari
+
+##### Core
+
+- [coverage] Remove the flow plugins as they were not needed (#6816) @rosskevin
+- [ButtonBase] Add test coverage for instance.focus (#6827) @agamrafaeli
+- [ButtonBase] Add test coverage for handleFocus (#6828) @agamrafaeli
+- [flow] Fix small issues (#6860) @oliviertassinari
+
 ## 1.0.0-alpha.13
 ###### _May 8, 2017_
 

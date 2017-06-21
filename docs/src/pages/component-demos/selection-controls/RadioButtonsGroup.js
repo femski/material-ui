@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -6,7 +6,7 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import { LabelRadio, RadioGroup } from 'material-ui/Radio';
 import { FormLabel, FormControl } from 'material-ui/Form';
 
-const styleSheet = createStyleSheet('RadioButtonsGroup', (theme) => ({
+const styleSheet = createStyleSheet('RadioButtonsGroup', theme => ({
   group: {
     margin: `${theme.spacing.unit}px 0`,
   },

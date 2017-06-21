@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
@@ -8,7 +8,7 @@ import Grid from 'material-ui/Grid';
 import withWidth from 'material-ui/utils/withWidth';
 import Typography from 'material-ui/Typography';
 
-const styleSheet = createStyleSheet('GridIntegration', (theme) => ({
+const styleSheet = createStyleSheet('GridIntegration', theme => ({
   root: {
     flexGrow: 1,
     paddingTop: 42,
@@ -62,7 +62,4 @@ GridIntegration.propTypes = {
   width: PropTypes.string,
 };
 
-export default compose(
-  withStyles(styleSheet),
-  withWidth(),
-)(GridIntegration);
+export default compose(withStyles(styleSheet), withWidth())(GridIntegration);

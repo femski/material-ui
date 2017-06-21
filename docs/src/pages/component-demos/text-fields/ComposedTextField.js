@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -6,14 +6,15 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Input from 'material-ui/Input';
 import InputLabel from 'material-ui/Input/InputLabel';
 import FormControl from 'material-ui/Form/FormControl';
+import FormHelperText from 'material-ui/Form/FormHelperText';
 
-const styleSheet = createStyleSheet('ComposedTextField', () => ({
+const styleSheet = createStyleSheet('ComposedTextField', theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
   },
   input: {
-    margin: 10,
+    margin: theme.spacing.unit,
   },
 }));
 
@@ -22,7 +23,7 @@ class ComposedTextField extends Component {
     name: 'Composed TextField',
   };
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({ name: event.target.value });
   };
 
@@ -35,11 +36,28 @@ class ComposedTextField extends Component {
           <InputLabel htmlFor="name">
             Name
           </InputLabel>
-          <Input
-            id="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
+          <Input id="name" value={this.state.name} onChange={this.handleChange} />
+        </FormControl>
+        <FormControl className={classes.input}>
+          <InputLabel htmlFor="name">
+            Name
+          </InputLabel>
+          <Input id="name" value={this.state.name} onChange={this.handleChange} />
+          <FormHelperText>Some important helper text</FormHelperText>
+        </FormControl>
+        <FormControl className={classes.input} disabled>
+          <InputLabel htmlFor="name">
+            Name
+          </InputLabel>
+          <Input id="name" value={this.state.name} onChange={this.handleChange} />
+          <FormHelperText>Some important helper text</FormHelperText>
+        </FormControl>
+        <FormControl className={classes.input} error>
+          <InputLabel htmlFor="name">
+            Name
+          </InputLabel>
+          <Input id="name" value={this.state.name} onChange={this.handleChange} />
+          <FormHelperText>Some important helper text</FormHelperText>
         </FormControl>
       </div>
     );

@@ -1,4 +1,4 @@
-// @flow weak
+// @flow
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -6,7 +6,7 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
-const styleSheet = createStyleSheet('PaperSheet', (theme) => ({
+const styleSheet = createStyleSheet('PaperSheet', theme => ({
   root: theme.mixins.gutters({
     paddingTop: 16,
     paddingBottom: 16,

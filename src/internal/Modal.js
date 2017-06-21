@@ -1,7 +1,6 @@
-// @flow weak
+// @flow
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Element, Component } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import { createStyleSheet } from 'jss-theme-reactor';
@@ -14,8 +13,8 @@ import ownerDocument from 'dom-helpers/ownerDocument';
 import addEventListener from '../utils/addEventListener';
 import { createChainedFunction } from '../utils/helpers';
 import Fade from '../transitions/Fade';
-import customPropTypes from '../utils/customPropTypes';
-import { createModalManager } from './modalManager';
+import withStyles from '../styles/withStyles';
+import createModalManager from './modalManager';
 import Backdrop from './Backdrop';
 import Portal from './Portal';
 
@@ -25,112 +24,129 @@ import Portal from './Portal';
  */
 const modalManager = createModalManager();
 
-export const styleSheet = createStyleSheet('MuiModal', (theme) => {
-  return {
-    modal: {
-      display: 'flex',
-      width: '100%',
-      height: '100%',
-      position: 'fixed',
-      zIndex: theme.zIndex.dialog,
-      top: 0,
-      left: 0,
-    },
-  };
-});
 
-/**
- * TODO: Still a WIP
- */
-export default class Modal extends Component {
-  static propTypes = {
-    /**
-     * The CSS class name of the backdrop element.
-     */
-    backdropClassName: PropTypes.string,
-    /**
-     * Pass a component class to use as the backdrop.
-     */
-    backdropComponent: PropTypes.func,
-    /**
-     * If `true`, the backdrop is invisible.
-     */
-    backdropInvisible: PropTypes.bool,
-    /**
-     * Duration in ms for the backgrop transition.
-     */
-    backdropTransitionDuration: PropTypes.number,
-    /**
-     * Content of the modal.
-     */
-    children: PropTypes.element,
-    /**
-     * The CSS class name of the root element.
-     */
-    className: PropTypes.string,
-    /**
-     * If `true`, the backdrop is disabled.
-     */
-    disableBackdrop: PropTypes.bool,
-    /**
-     * If `true`, clicking the backdrop will not fire the `onRequestClose` callback.
-     */
-    ignoreBackdropClick: PropTypes.bool,
-    /**
-     * If `true`, hitting escape will not fire the `onRequestClose` callback.
-     */
-    ignoreEscapeKeyUp: PropTypes.bool,
-    /**
-     * @ignore
-     */
-    modalManager: PropTypes.object,
-    /**
-     * Callback fires when the backdrop is clicked on.
-     */
-    onBackdropClick: PropTypes.func,
-    /**
-     * Callback fired before the modal is entering.
-     */
-    onEnter: PropTypes.func,
-    /**
-     * Callback fired when the modal is entering.
-     */
-    onEntering: PropTypes.func,
-    /**
-     * Callback fired when the modal has entered.
-     */
-    onEntered: PropTypes.func, // eslint-disable-line react/sort-prop-types
-    /**
-     * Callback fires when the escape key is pressed and the modal is in focus.
-     */
-    onEscapeKeyUp: PropTypes.func, // eslint-disable-line react/sort-prop-types
-    /**
-     * Callback fired before the modal is exiting.
-     */
-    onExit: PropTypes.func,
-    /**
-     * Callback fired when the modal is exiting.
-     */
-    onExiting: PropTypes.func,
-    /**
-     * Callback fired when the modal has exited.
-     */
-    onExited: PropTypes.func, // eslint-disable-line react/sort-prop-types
-    /**
-     * Callback fired when the modal requests to be closed.
-     */
-    onRequestClose: PropTypes.func,
-    /**
-     * If `true`, the Modal is visible.
-     */
-    show: PropTypes.bool,
-    /*
-    * Grab focus of not
-     */
-    grabFocus: PropTypes.bool,
-  };
+  export const styleSheet = createStyleSheet('MuiModal', theme => ({
+  root: {
+  display: 'flex',
+  width: '100%',
+  height: '100%',
+  position: 'fixed',
+  zIndex: theme.zIndex.dialog,
+  top: 0,
+  left: 0,
+},
+}));
 
-  static defaultProps = {
+  type DefaultProps = {
+  backdropComponent: Function,
+  backdropTransitionDuration: number,
+  backdropInvisible: boolean,
+  disableBackdrop: boolean,
+  ignoreBackdropClick: boolean,
+  ignoreEscapeKeyUp: boolean,
+  modalManager: Object,
+  show: boolean,
+};
+
+  type Props = DefaultProps & {
+  /**
+   * The CSS class name of the backdrop element.
+   */
+  backdropClassName?: string,
+  /**
+   * Pass a component class to use as the backdrop.
+   */
+  backdropComponent?: Function,
+  /**
+   * If `true`, the backdrop is invisible.
+   */
+  backdropInvisible?: boolean,
+  /**
+   * Duration in ms for the backgrop transition.
+   */
+  backdropTransitionDuration?: number,
+  /**
+   * Content of the modal.
+   */
+  children?: Element<*>,
+  /**
+   * Useful to extend the style applied to components.
+   */
+  classes: Object,
+  /**
+   * @ignore
+   */
+  className?: string,
+  /**
+   * If `true`, the backdrop is disabled.
+   */
+  disableBackdrop?: boolean,
+  /**
+   * If `true`, clicking the backdrop will not fire the `onRequestClose` callback.
+   */
+  ignoreBackdropClick?: boolean,
+  /**
+   * If `true`, hitting escape will not fire the `onRequestClose` callback.
+   */
+  ignoreEscapeKeyUp?: boolean,
+  /**
+   * @ignore
+   */
+  modalManager?: Object,
+  /**
+   * Callback fires when the backdrop is clicked on.
+   */
+  onBackdropClick?: Function,
+  /**
+   * Callback fired before the modal is entering.
+   */
+  onEnter?: Function,
+  /**
+   * Callback fired when the modal is entering.
+   */
+  onEntering?: Function,
+  /**
+   * Callback fired when the modal has entered.
+   */
+  onEntered?: Function, // eslint-disable-line react/sort-prop-types
+  /**
+   * Callback fires when the escape key is pressed and the modal is in focus.
+   */
+  onEscapeKeyUp?: Function, // eslint-disable-line react/sort-prop-types
+  /**
+   * Callback fired before the modal is exiting.
+   */
+  onExit?: Function,
+  /**
+   * Callback fired when the modal is exiting.
+   */
+  onExiting?: Function,
+  /**
+   * Callback fired when the modal has exited.
+   */
+  onExited?: Function, // eslint-disable-line react/sort-prop-types
+  /**
+   * Callback fired when the modal requests to be closed.
+   */
+  onRequestClose?: Function,
+  /*
+   * Grab focus of not
+   */
+  grabFocus: PropTypes.bool,
+  /**
+   * If `true`, the Modal is visible.
+   */
+  show?: boolean,
+};
+
+  type State = {
+  exited: boolean,
+};
+
+  class Modal extends Component<DefaultProps, Props, State> {
+  props: Props;
+
+  static defaultProps: DefaultProps = {
     backdropComponent: Backdrop,
     backdropTransitionDuration: 300,
     backdropInvisible: false,
@@ -142,11 +158,7 @@ export default class Modal extends Component {
     grabFocus: true,
   };
 
-  static contextTypes = {
-    styleManager: customPropTypes.muiRequired,
-  };
-
-  state = {
+  state: State = {
     exited: false,
   };
 
@@ -192,8 +204,8 @@ export default class Modal extends Component {
   lastFocus = undefined;
   modal = null;
   mountNode = null;
-  onDocumentKeyUpListener = undefined;
-  onFocusListener = undefined;
+  onDocumentKeyUpListener = null;
+  onFocusListener = null;
 
   checkForFocus() {
     if (canUseDom) {
@@ -211,11 +223,12 @@ export default class Modal extends Component {
 
       if (!modalContent.hasAttribute('tabIndex')) {
         modalContent.setAttribute('tabIndex', -1);
-        warning(false, (
+        warning(
+          false,
           'Material-UI: The modal content node does not accept focus. ' +
-          'For the benefit of assistive technologies, ' +
-          'the tabIndex of the node is being set to "-1".'
-        ));
+            'For the benefit of assistive technologies, ' +
+            'the tabIndex of the node is being set to "-1".',
+        );
       }
 
       modalContent.focus();
@@ -240,8 +253,8 @@ export default class Modal extends Component {
 
   handleHide() {
     this.props.modalManager.remove(this);
-    this.onDocumentKeyUpListener.remove();
-    this.onFocusListener.remove();
+    if (this.onDocumentKeyUpListener) this.onDocumentKeyUpListener.remove();
+    if (this.onFocusListener) this.onFocusListener.remove();
     if (this.props.grabFocus)
       this.restoreLastFocus();
   }
@@ -259,17 +272,13 @@ export default class Modal extends Component {
     }
   };
 
-  handleDocumentKeyUp = (event) => {
+  handleDocumentKeyUp = (event: Event) => {
     if (!this.mounted || !this.props.modalManager.isTopModal(this)) {
       return;
     }
 
     if (keycode(event) === 'esc') {
-      const {
-        onEscapeKeyUp,
-        onRequestClose,
-        ignoreEscapeKeyUp,
-      } = this.props;
+      const { onEscapeKeyUp, onRequestClose, ignoreEscapeKeyUp } = this.props;
 
       if (onEscapeKeyUp) {
         onEscapeKeyUp(event);
@@ -281,16 +290,12 @@ export default class Modal extends Component {
     }
   };
 
-  handleBackdropClick = (event) => {
+  handleBackdropClick = (event: Event) => {
     if (event.target !== event.currentTarget) {
       return;
     }
 
-    const {
-      onBackdropClick,
-      onRequestClose,
-      ignoreBackdropClick,
-    } = this.props;
+    const { onBackdropClick, onRequestClose, ignoreBackdropClick } = this.props;
 
     if (onBackdropClick) {
       onBackdropClick(event);
@@ -302,16 +307,17 @@ export default class Modal extends Component {
   };
 
   handleTransitionExited = (...args) => {
-    this.setState({ exited: true });
-    this.handleHide();
     if (this.props.onExited) {
       this.props.onExited(...args);
     }
+
+    this.setState({ exited: true });
+    this.handleHide();
   };
 
-  renderBackdrop(other = {}) {
+  renderBackdrop(other: { [key: string]: any } = {}) {
     const {
-      backdropComponent,
+      backdropComponent: BackdropComponent,
       backdropClassName,
       backdropTransitionDuration,
       backdropInvisible,
@@ -327,11 +333,11 @@ export default class Modal extends Component {
         timeout={backdropTransitionDuration + 20}
         {...other}
       >
-        {React.createElement(backdropComponent, {
-          invisible: backdropInvisible,
-          className: backdropClassName,
-          onClick: this.handleBackdropClick,
-        })}
+        <BackdropComponent
+          invisible={backdropInvisible}
+          className={backdropClassName}
+          onClick={this.handleBackdropClick}
+        />
       </Fade>
     );
   }
@@ -340,32 +346,30 @@ export default class Modal extends Component {
     const {
       disableBackdrop,
       grabFocus, // eslint-disable-line no-unused-vars
-      backdropComponent, // eslint-disable-line no-unused-vars
-      backdropClassName, // eslint-disable-line no-unused-vars
-      backdropTransitionDuration, // eslint-disable-line no-unused-vars
+      backdropComponent,
+      backdropClassName,
+      backdropTransitionDuration,
       backdropInvisible,
-      ignoreBackdropClick, // eslint-disable-line no-unused-vars
-      ignoreEscapeKeyUp, // eslint-disable-line no-unused-vars
+      ignoreBackdropClick,
+      ignoreEscapeKeyUp,
       children,
+      classes,
       className,
-      modalManager: modalManagerProp, // eslint-disable-line no-unused-vars
-      onBackdropClick, // eslint-disable-line no-unused-vars
-      onEscapeKeyUp, // eslint-disable-line no-unused-vars
-      onRequestClose, // eslint-disable-line no-unused-vars
+      modalManager: modalManagerProp,
+      onBackdropClick,
+      onEscapeKeyUp,
+      onRequestClose,
       onEnter,
       onEntering,
       onEntered,
       onExit,
       onExiting,
-      onExited, // eslint-disable-line no-unused-vars
+      onExited,
       show,
       ...other
     } = this.props;
 
-    const classes = this.context.styleManager.render(styleSheet);
-    const mount = show || !this.state.exited;
-
-    if (!mount) {
+    if (!show && this.state.exited) {
       return null;
     }
 
@@ -394,7 +398,7 @@ export default class Modal extends Component {
     }
 
     if (backdropInvisible && modalChild.props.hasOwnProperty('in')) {
-      Object.keys(transitionCallbacks).forEach((key) => {
+      Object.keys(transitionCallbacks).forEach(key => {
         childProps[key] = createChainedFunction(transitionCallbacks[key], modalChild.props[key]);
       });
     } else {
@@ -406,11 +410,18 @@ export default class Modal extends Component {
     }
 
     return (
-      <Portal open ref={(c) => { this.mountNode = c ? c.getLayer() : c; }}>
+      <Portal
+        open
+        ref={node => {
+          this.mountNode = node ? node.getLayer() : node;
+        }}
+      >
         <div
           data-mui-test="Modal"
-          className={classNames(classes.modal, className)}
-          ref={(c) => { this.modal = c; }}
+          className={classNames(classes.root, className)}
+          ref={node => {
+            this.modal = node;
+          }}
           {...other}
         >
           {!disableBackdrop && this.renderBackdrop(backdropProps)}
@@ -420,3 +431,5 @@ export default class Modal extends Component {
     );
   }
 }
+
+export default withStyles(styleSheet)(Modal);

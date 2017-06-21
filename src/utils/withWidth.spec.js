@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { assert } from 'chai';
-import { createMount, createShallow } from 'src/test-utils';
+import { createMount, createShallow } from '../test-utils';
 import withWidth, { isWidthDown, isWidthUp } from './withWidth';
 
 const Empty = () => <div />;
@@ -78,7 +78,7 @@ describe('withWidth', () => {
       const updateWidth = instance.updateWidth.bind(instance);
       const breakpoints = wrapper.context().theme.breakpoints;
 
-      breakpoints.keys.forEach((key) => {
+      breakpoints.keys.forEach(key => {
         updateWidth(breakpoints.getWidth(key));
         assert.strictEqual(wrapper.state().width, key, 'should return the matching width');
       });

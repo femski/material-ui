@@ -3,7 +3,7 @@
 import React from 'react';
 import { assert } from 'chai';
 import { spy } from 'sinon';
-import { createShallow } from 'src/test-utils';
+import { createShallow } from '../test-utils';
 import Slide from './Slide';
 import transitions, { easing, duration } from '../styles/transitions';
 
@@ -29,14 +29,7 @@ describe('<Slide />', () => {
 
   describe('event callbacks', () => {
     it('should fire event callbacks', () => {
-      const events = [
-        'onEnter',
-        'onEntering',
-        'onEntered',
-        'onExit',
-        'onExiting',
-        'onExited',
-      ];
+      const events = ['onEnter', 'onEntering', 'onEntered', 'onExit', 'onExiting', 'onExited'];
 
       const handlers = events.reduce((result, n) => {
         result[n] = spy();
@@ -45,7 +38,7 @@ describe('<Slide />', () => {
 
       const wrapper = shallow(<Slide {...handlers} />);
 
-      events.forEach((n) => {
+      events.forEach(n => {
         const event = n.charAt(2).toLowerCase() + n.slice(3);
         wrapper.simulate(event, { style: {}, getBoundingClientRect: () => ({}) });
         assert.strictEqual(handlers[n].callCount, 1, `should have called the ${n} handler`);
@@ -62,10 +55,7 @@ describe('<Slide />', () => {
 
     before(() => {
       wrapper = shallow(
-        <Slide
-          enterTransitionDuration={enterDuration}
-          leaveTransitionDuration={leaveDuration}
-        />,
+        <Slide enterTransitionDuration={enterDuration} leaveTransitionDuration={leaveDuration} />,
       );
       instance = wrapper.instance();
       element = {

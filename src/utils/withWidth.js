@@ -38,12 +38,12 @@ function withWidth(options = {}) {
     resizeInterval = 166, // Corresponds to 10 frames at 60 Hz.
   } = options;
 
-  return (BaseComponent) => {
+  return BaseComponent => {
     const factory = createEagerFactory(BaseComponent);
 
     class Width extends Component {
       static contextTypes = {
-        theme: customPropTypes.muiRequired,
+        styleManager: customPropTypes.muiRequired,
       };
 
       state = {
@@ -68,7 +68,7 @@ function withWidth(options = {}) {
       };
 
       updateWidth(innerWidth) {
-        const breakpoints = this.context.theme.breakpoints;
+        const breakpoints = this.context.styleManager.theme.breakpoints;
         let width = null;
 
         /**

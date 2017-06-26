@@ -24,6 +24,115 @@ Below is a summary of major changes.
 - [Ripple/TouchRipple] Refactored and now works properly inside a button in firefox!
 - [Button] Raised/flat/fab are now combined into a single component.
 
+## 1.0.0-alpha.19
+###### _Jun 19, 2017_
+
+The previous v1.0.0-alpha.18 release is corrupted.
+
+##### Component Fixes / Enhancements
+
+- [Typography] Expose a headlineMapping property (#7183) @oliviertassinari
+- [Typography] Add a accent color variation (#7183) @oliviertassinari
+- [FormControl] Fix wording (#7183) @oliviertassinari
+- [Toolbar] Simplify breakpoint logic (#7183) @oliviertassinari
+- [Button] Fix upload button demo (#7183) @oliviertassinari
+- [TextField] Forward the placeholder (#7183) @oliviertassinari
+- [MobileStepper] Improvements (#7179) @alexhayes
+- [MobileStepper] Fix the wordings (#7183) @oliviertassinari
+- [AppBar] Use a header instead of a div DOM element (#7183) @oliviertassinari
+
+##### Docs
+
+- [docs] Update minimizing-bundle-size.md (#7169) @kazazor
+- [docs] Info on how to use the breakpoints attribute in the theme (#7172) @alexhayes
+- [docs] Add a supported browsers section (#7174) @oliviertassinari
+- [docs] We don't require any polyfill (#7183) @oliviertassinari
+- [docs] Exposes the 3 Babel plugins available for minimising the bundle size (#) @oliviertassinari
+- [docs] Fix MATERIAL_UI_PORT not fully supported
+
+##### Core
+
+- [core] Add missing flow import (#7180) @oliviertassinari
+
+## 1.0.0-alpha.18
+###### _Jun 19, 2017_
+
+##### Breaking changes
+
+- [TextField] Add a marginForm property (#7113) @oliviertassinari
+This change makes the extra margin of the component optional.
+It's making us following less closely the specification but provides more flexibility out of the box.
+- [core] Remove some no longer needed properties (#7132) @oliviertassinari
+Use the `classes` property over the removed `xxxClassName`.
+- [Button] Implement the dense option over the compact one (#7147) @oliviertassinari
+
+##### Component Fixes / Enhancements
+
+- [SvgIcon] set focusable=false to fix IE tab navigation (#7106) @petermikitsh
+- [Dialog] Remove css width as it is too prescriptive for simple dialogs (#7115) @oliviertassinari
+- [BottomNavigation] Fix type error when onChange is not defined (#7139) @seasick
+- [TextField] Better support number value type (#7162) @oliviertassinari
+- [ButtonBase] Normalize ripple to disableRipple (#7159) @oliviertassinari
+
+##### Docs
+
+- [docs] Document the Label wrappers (#7161) @oliviertassinari
+
+##### Core
+
+- [MuiThemeProvider] Small eslint fix (#7128) @Airblader
+- [core] Simplify the array logic (#7112) @oliviertassinari
+- [core] Fix type use of Element (#7111) @rosskevin
+- [core] Use the beta of circleci (#7133) @oliviertassinari
+- [core] Update dependencies (#7137) @oliviertassinari
+- [core] Update dependencies, able to remove react-addons-test-utils (#7146) @rosskevin
+- [core] As usual after using the lib in a real project I find issues (#7147) @oliviertassinari
+- [core] Disable linebreak-style rule (#7163) @oliviertassinari
+- [test] Four nines (#7173) @oliviertassinari
+
+## 1.0.0-alpha.17
+###### _Jun 12, 2017_
+
+Big thanks to the 8 contributors who made this release possible.
+
+##### Breaking changes
+
+- [core] Normalize the API (#7099) @oliviertassinari
+Reduce degree of freedom of the API with the color property. That's a tradeoff between correctness and verbosity.
+People should be able to recover from that breaking change quite easily as react is going to throw warnings. For instance:
+```diff
+-<Button contrast primary>Login</Button>
++<Button color="contrast">Login</Button>
+```
+
+##### Component Fixes / Enhancements
+
+- [Switch] Correctly change the cursor value (#7042) @oliviertassinari
+- [FormControl] Cannot read property 'target' of undefined (#7046 @Fi1osof
+- [AppBar] Add a position property (#7049) @oliviertassinari
+- [Stepper] Mobile version (#7043) @alexhayes
+- [Snackbar] Implement the component on the next branch (#7059) @oliviertassinari
+- [ListItemText] Add disableTypography property (#7073 @zachwolf
+- [Modal] Add a keepMounted property (#7072) @oliviertassinari
+- [Button] Fix the behavior when a href is provided (#7083) @oliviertassinari
+- [Avatar] Add a imgProps property (#7084) @oliviertassinari
+- [FormHelperText] Add a min-height (#7085) @oliviertassinari
+- [Button] Add an upload example (#7086) @oliviertassinari
+
+##### Docs
+
+- [docs] Add testing section (#7101) @oliviertassinari
+- [docs] Show the vision in the docs (#7078) @oliviertassinari
+- [docs] Improve the documentation on the classes property (#7062) @oliviertassinari
+- [docs] Improve accessibility in the component examples (#7047) @tuukkao
+- [docs] Update usage.md "Hello World" :| (#7027) @dphrag
+- [docs] Add link to the temporary alpha docs (#7037) @peteratticusberg
+
+##### Core
+
+- [eslint] Loosen no-unused-vars eslint rule (#7064) @yuchi
+- [core] Various fixes (#7028) @oliviertassinari
+
 ## 1.0.0-alpha.16
 ###### _Jun 1, 2017_
 

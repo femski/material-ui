@@ -83,11 +83,12 @@ function AppDrawer(props) {
       open={props.open}
       onRequestClose={props.onRequestClose}
       docked={props.docked}
+      keepMounted
     >
       <div className={classes.nav}>
         <Toolbar className={classes.toolbar}>
           <Link className={classes.title} to="/" onClick={props.onRequestClose}>
-            <Typography type="title" gutterBottom colorInherit>
+            <Typography type="title" gutterBottom color="inherit">
               Material-UI
             </Typography>
           </Link>

@@ -3,7 +3,8 @@
 import React from 'react';
 import { assert } from 'chai';
 import { spy } from 'sinon';
-import { createShallow } from '../test-utils';
+import { findDOMNode } from 'react-dom';
+import { createShallow, createMount } from '../test-utils';
 import Slide from './Slide';
 import transitions, { easing, duration } from '../styles/transitions';
 
@@ -73,8 +74,8 @@ describe('<Slide />', () => {
       assert.strictEqual(element.style.transition, animation);
     });
 
-    it('should create proper sharp animation onExiting', () => {
-      instance.handleExiting(element);
+    it('should create proper sharp animation onExit', () => {
+      instance.handleExit(element);
       const animation = transitions.create('transform', {
         duration: leaveDuration,
         easing: easing.sharp,
@@ -95,7 +96,7 @@ describe('<Slide />', () => {
     describe('handleEnter()', () => {
       let element;
 
-      before(() => {
+      beforeEach(() => {
         element = {
           getBoundingClientRect: () => ({
             width: 500,
@@ -115,13 +116,20 @@ describe('<Slide />', () => {
         assert.strictEqual(element.style.transform, 'translate3d(calc(100vw - 300px), 0, 0)');
         wrapper.setProps({ direction: 'right' });
         instance.handleEnter(element);
-        assert.strictEqual(element.style.transform, 'translate3d(-800px, 0, 0)');
+        assert.strictEqual(element.style.transform, 'translate3d(-824px, 0, 0)');
         wrapper.setProps({ direction: 'up' });
         instance.handleEnter(element);
         assert.strictEqual(element.style.transform, 'translate3d(0, calc(100vh - 200px), 0)');
         wrapper.setProps({ direction: 'down' });
         instance.handleEnter(element);
         assert.strictEqual(element.style.transform, 'translate3d(0, -500px, 0)');
+      });
+
+      it('should reset the previous transition if needed', () => {
+        element.style.transform = 'translate3d(-824px, 0, 0)';
+        wrapper.setProps({ direction: 'right' });
+        instance.handleEnter(element);
+        assert.strictEqual(element.style.transform, 'translate3d(-824px, 0, 0)');
       });
     });
 
@@ -161,7 +169,7 @@ describe('<Slide />', () => {
         assert.strictEqual(element.style.transform, 'translate3d(calc(100vw - 300px), 0, 0)');
         wrapper.setProps({ direction: 'right' });
         instance.handleEnter(element);
-        assert.strictEqual(element.style.transform, 'translate3d(-800px, 0, 0)');
+        assert.strictEqual(element.style.transform, 'translate3d(-824px, 0, 0)');
         wrapper.setProps({ direction: 'up' });
         instance.handleEnter(element);
         assert.strictEqual(element.style.transform, 'translate3d(0, calc(100vh - 200px), 0)');
@@ -169,6 +177,25 @@ describe('<Slide />', () => {
         instance.handleEnter(element);
         assert.strictEqual(element.style.transform, 'translate3d(0, -500px, 0)');
       });
+    });
+  });
+
+  describe('mount', () => {
+    let mount;
+
+    before(() => {
+      mount = createMount();
+    });
+
+    after(() => {
+      mount.cleanUp();
+    });
+
+    it('should work when initialy hidden', () => {
+      const wrapper = mount(<Slide in={false}><div>Foo</div></Slide>);
+      const transition = findDOMNode(wrapper.instance().transition);
+      // $FlowFixMe
+      assert.notStrictEqual(transition ? transition.style.transform : undefined, undefined);
     });
   });
 });

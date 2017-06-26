@@ -1,6 +1,7 @@
 // @flow weak
 
-import React, { Component, Element as ReactElement } from 'react'; // DOM type `Element` used below
+import React, { Component } from 'react';
+import type { Element as ReactElement } from 'react'; // DOM type `Element` used below
 import ReactDOM from 'react-dom';
 import transitionInfo from 'dom-helpers/transition/properties';
 import addEventListener from 'dom-helpers/events/on';
@@ -41,7 +42,12 @@ type DefaultProps = {
 function requestAnimationStart(callback) {
   // Feature detect rAF, fallback to setTimeout
   if (window.requestAnimationFrame) {
-    window.requestAnimationFrame(callback);
+    // Chrome and Safari have a bug where calling rAF once returns the current
+    // frame instead of the next frame, so we need to call a double rAF here.
+    // See https://crbug.com/675795 for more.
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(callback);
+    });
   } else {
     setTimeout(callback, 0);
   }

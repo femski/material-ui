@@ -1,6 +1,7 @@
 // @flow weak
 
-import React, { Element, Component } from 'react';
+import React, { Component } from 'react';
+import type { Element } from 'react';
 import Transition from '../internal/Transition';
 import { duration } from '../styles/transitions';
 import customPropTypes from '../utils/customPropTypes';
@@ -62,16 +63,19 @@ class Fade extends Component<DefaultProps, Props, void> {
 
   handleEnter = element => {
     element.style.opacity = 0;
-    const { transitions } = this.context.styleManager.theme;
-    element.style.transition = transitions.create('opacity', {
-      duration: this.props.enterTransitionDuration,
-    });
     if (this.props.onEnter) {
       this.props.onEnter(element);
     }
   };
 
   handleEntering = element => {
+    const { transitions } = this.context.styleManager.theme;
+    element.style.transition = transitions.create('opacity', {
+      duration: this.props.enterTransitionDuration,
+    });
+    element.style.WebkitTransition = transitions.create('opacity', {
+      duration: this.props.enterTransitionDuration,
+    });
     element.style.opacity = 1;
     if (this.props.onEntering) {
       this.props.onEntering(element);
@@ -81,6 +85,9 @@ class Fade extends Component<DefaultProps, Props, void> {
   handleExit = element => {
     const { transitions } = this.context.styleManager.theme;
     element.style.transition = transitions.create('opacity', {
+      duration: this.props.leaveTransitionDuration,
+    });
+    element.style.WebkitTransition = transitions.create('opacity', {
       duration: this.props.leaveTransitionDuration,
     });
     element.style.opacity = 0;
@@ -105,6 +112,8 @@ class Fade extends Component<DefaultProps, Props, void> {
         onEnter={this.handleEnter}
         onEntering={this.handleEntering}
         onExit={this.handleExit}
+        timeout={Math.max(enterTransitionDuration, leaveTransitionDuration) + 10}
+        transitionAppear
         {...other}
       >
         {children}

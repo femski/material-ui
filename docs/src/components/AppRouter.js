@@ -44,6 +44,13 @@ export default function AppRouter() {
             component={MarkdownDocs}
             nav
           />
+          <Route
+            title="Supported Browsers"
+            path="/getting-started/supported-browsers"
+            content={requireMarkdown('./getting-started/supported-browsers.md')}
+            component={MarkdownDocs}
+            nav
+          />
         </Route>
         <Route title="Customization" path="/customization" nav component={AppContent}>
           <Route
@@ -97,6 +104,13 @@ export default function AppRouter() {
             component={MarkdownDocs}
             nav
           />
+          <Route
+            title="Testing"
+            path="/guides/testing"
+            content={requireMarkdown('./guides/testing.md')}
+            component={MarkdownDocs}
+            nav
+          />
         </Route>
         <Route title="Style" path="/style" nav component={AppContent}>
           <Route
@@ -143,6 +157,13 @@ export default function AppRouter() {
             component={MarkdownDocs}
             nav
           />
+          <Route
+            title="CSS in JS"
+            path="/layout/css-in-js"
+            content={requireMarkdown('./layout/css-in-js.md')}
+            component={MarkdownDocs}
+            nav
+          />
         </Route>
         <Route title="Component Demos" path="/component-demos" nav component={AppContent}>
           {demos.map(demo => {
@@ -175,6 +196,13 @@ export default function AppRouter() {
           })}
         </Route>
         <Route title="Discover More" path="/discover-more" nav component={AppContent}>
+          <Route
+            title="Vision"
+            path="/discover-more/vision"
+            content={requireMarkdown('./discover-more/vision.md')}
+            component={MarkdownDocs}
+            nav
+          />
           <Route
             title="Community"
             path="/discover-more/community"

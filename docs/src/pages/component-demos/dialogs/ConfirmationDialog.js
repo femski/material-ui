@@ -27,11 +27,6 @@ const options = [
 ];
 
 class ConfirmationDialog extends Component {
-  static propTypes = {
-    onRequestClose: PropTypes.func,
-    selectedValue: PropTypes.string,
-  };
-
   state = {
     selectedValue: undefined,
   };
@@ -66,10 +61,16 @@ class ConfirmationDialog extends Component {
   };
 
   render() {
-    const { onRequestClose, selectedValue, ...other } = this.props;
+    const { selectedValue, ...other } = this.props;
 
     return (
-      <Dialog onEntering={this.handleEntering} {...other}>
+      <Dialog
+        ignoreBackdropClick
+        ignoreEscapeKeyUp
+        maxWidth="xs"
+        onEntering={this.handleEntering}
+        {...other}
+      >
         <DialogTitle>Phone Ringtone</DialogTitle>
         <DialogContent>
           <RadioGroup
@@ -85,13 +86,18 @@ class ConfirmationDialog extends Component {
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleCancel} primary>Cancel</Button>
-          <Button onClick={this.handleOk} primary>Ok</Button>
+          <Button onClick={this.handleCancel} color="primary">Cancel</Button>
+          <Button onClick={this.handleOk} color="primary">Ok</Button>
         </DialogActions>
       </Dialog>
     );
   }
 }
+
+ConfirmationDialog.propTypes = {
+  onRequestClose: PropTypes.func,
+  selectedValue: PropTypes.string,
+};
 
 const styleSheet = createStyleSheet('ConfirmationDialogDemo', theme => ({
   root: {
@@ -144,8 +150,9 @@ class ConfirmationDialogDemo extends Component {
             <ListItemText primary="Default notification ringtone" secondary="Tethys" />
           </ListItem>
           <ConfirmationDialog
-            maxWidth="xs"
-            paperClassName={classes.dialog}
+            classes={{
+              paper: classes.dialog,
+            }}
             open={this.state.open}
             onRequestClose={this.handleRequestClose}
             selectedValue={this.state.selectedValue}

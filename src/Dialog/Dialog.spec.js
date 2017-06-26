@@ -78,19 +78,19 @@ describe('<Dialog />', () => {
     const paper = fade.childAt(0);
     assert.strictEqual(paper.length === 1 && paper.name(), 'withStyles(Paper)');
 
-    assert.strictEqual(paper.hasClass(classes.dialog), true, 'should have the dialog class');
+    assert.strictEqual(paper.hasClass(classes.paper), true, 'should have the dialog class');
   });
 
   it('should not be open by default', () => {
     const wrapper = shallow(<Dialog />);
     assert.strictEqual(wrapper.props().show, false, 'should pass show=false to the Modal');
-    assert.strictEqual(wrapper.find('Fade').prop('in'), false, 'should pass in=false to the Fade');
+    assert.strictEqual(wrapper.find('Fade').props().in, false, 'should pass in=false to the Fade');
   });
 
   it('should be open by default', () => {
     const wrapper = shallow(<Dialog open />);
     assert.strictEqual(wrapper.props().show, true, 'should pass show=true to the Modal');
-    assert.strictEqual(wrapper.find('Fade').prop('in'), true, 'should pass in=true to the Fade');
+    assert.strictEqual(wrapper.find('Fade').props().in, true, 'should pass in=true to the Fade');
   });
 
   it('should fade down and make the transition appear on first mount', () => {
@@ -102,10 +102,10 @@ describe('<Dialog />', () => {
     );
   });
 
-  describe('prop: paperClassName', () => {
+  describe('prop: classes', () => {
     it('should add the class on the Paper element', () => {
       const className = 'foo';
-      const wrapper = shallow(<Dialog paperClassName={className} />);
+      const wrapper = shallow(<Dialog classes={{ paper: className }} />);
       assert.strictEqual(wrapper.find(Paper).hasClass(className), true);
     });
   });
@@ -113,7 +113,7 @@ describe('<Dialog />', () => {
   describe('prop: maxWidth', () => {
     it('should use the right className', () => {
       const wrapper = shallow(<Dialog maxWidth="xs" />);
-      assert.strictEqual(wrapper.find(Paper).hasClass(classes['dialogWidth-xs']), true);
+      assert.strictEqual(wrapper.find(Paper).hasClass(classes.paperWidthXs), true);
     });
   });
 

@@ -23,20 +23,19 @@ Dialogs are overlaid modal paper based components with a backdrop.
 | onExited | Function |  | Callback fired when the dialog has exited. |
 | onRequestClose | Function |  | Callback fired when the dialog requests to be closed. |
 | open | boolean | false | If `true`, the Dialog is open. |
-| paperClassName | string |  | The CSS class name of the paper inner element. |
 | transition | union:&nbsp;Function<br>&nbsp;Element<*><br> | Fade | Transition component. |
 
 Any other properties supplied will be spread to the root element.
 
-## Classes
+## CSS API
 
 You can overrides all the class names injected by Material-UI thanks to the `classes` property.
 This property accepts the following keys:
 - `root`
-- `dialog`
-- `dialogWidth-xs`
-- `dialogWidth-sm`
-- `dialogWidth-md`
+- `paper`
+- `paperWidthXs`
+- `paperWidthSm`
+- `paperWidthMd`
 - `fullScreen`
 
 Have a look at [overriding with class names](/customization/overrides#overriding-with-class-names)

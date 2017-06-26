@@ -22,6 +22,7 @@ module.exports = {
     },
   },
   rules: {
+    'linebreak-style': 'off', // Don't play nicely with Windows.
     'arrow-body-style': 'off', // Not our taste?
     'arrow-parens': 'off', // Incompatible with prettier
     indent: 'off', // Incompatible with prettier
@@ -75,7 +76,6 @@ module.exports = {
         order: [
           'type-annotations',
           'static-methods',
-          'props',
           'lifecycle',
           // '/^handle.+$/', // wishlist -- needs above first
           // '/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/', // wishlist -- needs above first

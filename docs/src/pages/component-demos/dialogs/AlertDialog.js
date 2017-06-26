@@ -14,7 +14,9 @@ export default class AlertDialog extends Component {
     open: false,
   };
 
-  handleRequestClose = () => this.setState({ open: false });
+  handleRequestClose = () => {
+    this.setState({ open: false });
+  };
 
   render() {
     return (
@@ -32,8 +34,8 @@ export default class AlertDialog extends Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleRequestClose} primary>Disagree</Button>
-            <Button onClick={this.handleRequestClose} primary>Agree</Button>
+            <Button onClick={this.handleRequestClose} color="primary">Disagree</Button>
+            <Button onClick={this.handleRequestClose} color="primary">Agree</Button>
           </DialogActions>
         </Dialog>
       </div>

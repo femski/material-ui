@@ -1,6 +1,7 @@
 // @flow
 
-import React, { Element, Component } from 'react';
+import React, { Component } from 'react';
+import type { Element } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import { createStyleSheet } from 'jss-theme-reactor';
@@ -27,14 +28,17 @@ const modalManager = createModalManager();
 
   export const styleSheet = createStyleSheet('MuiModal', theme => ({
   root: {
-  display: 'flex',
-  width: '100%',
-  height: '100%',
-  position: 'fixed',
-  zIndex: theme.zIndex.dialog,
-  top: 0,
-  left: 0,
-},
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    zIndex: theme.zIndex.dialog,
+    top: 0,
+    left: 0,
+  },
+  hidden: {
+    pointerEvents: 'none',
+  },
 }));
 
   type DefaultProps = {
@@ -77,6 +81,12 @@ const modalManager = createModalManager();
    * @ignore
    */
   className?: string,
+  /**
+   * Always keep the children in the DOM.
+   * That property can be useful in SEO situation or
+   * when you want to maximize the responsiveness of the Modal.
+   */
+  keepMounted?: boolean,
   /**
    * If `true`, the backdrop is disabled.
    */
@@ -150,6 +160,7 @@ const modalManager = createModalManager();
     backdropComponent: Backdrop,
     backdropTransitionDuration: 300,
     backdropInvisible: false,
+    keepMounted: false,
     disableBackdrop: false,
     ignoreBackdropClick: false,
     ignoreEscapeKeyUp: false,
@@ -355,6 +366,7 @@ const modalManager = createModalManager();
       children,
       classes,
       className,
+      keepMounted,
       modalManager: modalManagerProp,
       onBackdropClick,
       onEscapeKeyUp,
@@ -369,7 +381,7 @@ const modalManager = createModalManager();
       ...other
     } = this.props;
 
-    if (!show && this.state.exited) {
+    if (!keepMounted && !show && this.state.exited) {
       return null;
     }
 
@@ -383,11 +395,8 @@ const modalManager = createModalManager();
     };
 
     let modalChild = React.Children.only(children);
-
     const { role, tabIndex } = modalChild.props;
-
     const childProps = {};
-    let backdropProps;
 
     if (role === undefined) {
       childProps.role = role === undefined ? 'document' : role;
@@ -396,6 +405,8 @@ const modalManager = createModalManager();
     if (tabIndex === undefined) {
       childProps.tabIndex = tabIndex == null ? '-1' : tabIndex;
     }
+
+    let backdropProps;
 
     if (backdropInvisible && modalChild.props.hasOwnProperty('in')) {
       Object.keys(transitionCallbacks).forEach(key => {
@@ -418,13 +429,17 @@ const modalManager = createModalManager();
       >
         <div
           data-mui-test="Modal"
-          className={classNames(classes.root, className)}
+          className={classNames(classes.root, className, {
+            [classes.hidden]: !show,
+          })}
           ref={node => {
             this.modal = node;
           }}
           {...other}
         >
-          {!disableBackdrop && this.renderBackdrop(backdropProps)}
+          {!disableBackdrop &&
+            (!keepMounted || show || !this.state.exited) &&
+            this.renderBackdrop(backdropProps)}
           {modalChild}
         </div>
       </Portal>
